@@ -1,5 +1,6 @@
 <template>
   <div class="list" ref="wrapper">
+    <!--为了使用betterScroll，需要在此定义div-->
     <div>
       <div class="phoneBook"
            v-for="(item,key) of phoneBooks"

@@ -1,7 +1,8 @@
 <template>
     <div>
       <phone-book-header></phone-book-header>
-      <phone-book-search></phone-book-search>
+      <phone-book-search
+        :phoneBooks="phoneBooks"></phone-book-search>
       <phone-book-list
         :letter="letter"
         :phoneBooks="phoneBooks"></phone-book-list>
