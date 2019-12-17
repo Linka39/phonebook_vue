@@ -3,6 +3,7 @@
       <phone-book-header></phone-book-header>
       <phone-book-search></phone-book-search>
       <phone-book-list :phoneBooks="phoneBooks"></phone-book-list>
+      <phone-book-alphabet :phoneBooks="phoneBooks"></phone-book-alphabet>
     </div>
 </template>
 
@@ -12,6 +13,7 @@
   import PhoneBookHeader from "./components/Header"
   import PhoneBookSearch from "./components/Search"
   import PhoneBookList from "./components/List"
+  import PhoneBookAlphabet from  "./components/Alphabet"
 
     export default {
       name: "PhoneBook",
@@ -23,7 +25,8 @@
       components:{
         PhoneBookHeader,
         PhoneBookSearch,
-        PhoneBookList
+        PhoneBookList,
+        PhoneBookAlphabet
       },
       methods:{
         refreshToken(){
