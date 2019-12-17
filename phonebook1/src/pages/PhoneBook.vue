@@ -2,8 +2,12 @@
     <div>
       <phone-book-header></phone-book-header>
       <phone-book-search></phone-book-search>
-      <phone-book-list :phoneBooks="phoneBooks"></phone-book-list>
-      <phone-book-alphabet :phoneBooks="phoneBooks"></phone-book-alphabet>
+      <phone-book-list
+        :letter="letter"
+        :phoneBooks="phoneBooks"></phone-book-list>
+      <phone-book-alphabet
+        @change="handleLetterChange"
+        :phoneBooks="phoneBooks"></phone-book-alphabet>
     </div>
 </template>
 
@@ -19,7 +23,8 @@
       name: "PhoneBook",
       data(){
         return{
-          phoneBooks:{}
+          phoneBooks:{},
+          letter:''
         }
       },
       components:{
@@ -52,6 +57,10 @@
             }).catch(error=>{
             console.log(error);
           })
+        },
+        handleLetterChange(letter){
+          console.log("list组件传来的值为：" + letter);
+          this.letter=letter;
         }
       },
       mounted() {
