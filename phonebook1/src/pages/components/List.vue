@@ -1,18 +1,19 @@
 <template>
-  <div class="list">
-    <div class="phoneBook"
-         v-for="(item,key) of phoneBooks"
-         :key="key">
-      <div class="title">{{key}}</div>
-      <div class="item"
-           v-for="innerItem of item"
-           :key="innerItem.id">
-        <!--属性前加上冒号才能动态计算-->
-        <img :src="getImageUrl(innerItem.image)" alt="image" >
-        <div class="content border-bottom">{{innerItem.name}}</div>
+  <div class="list" ref="wrapper">
+    <div>
+      <div class="phoneBook"
+           v-for="(item,key) of phoneBooks"
+           :key="key">
+        <div class="title">{{key}}</div>
+        <div class="item"
+             v-for="innerItem of item"
+             :key="innerItem.id">
+          <!--属性前加上冒号才能动态计算-->
+          <img :src="getImageUrl(innerItem.image)" alt="image" >
+          <div class="content border-bottom">{{innerItem.name}}</div>
+        </div>
       </div>
     </div>
-
     <div class="phoneBook">
       <div class="title">B</div>
       <div class="item">
@@ -29,15 +30,11 @@
 
 <script>
   //@ 在webpackbase里定义到src文件夹
-  import  {getServerUrl} from "@/config/sys";
+  import {getServerUrl} from "@/config/sys";
+  import Bscroll from "better-scroll"
 
   export default {
     name: "List",
-    /*data(){
-      return{
-        phoneBooks:'',
-      }
-    },*/
     /*props:['phoneBooks']*/
     props:{
       phoneBooks:Object
@@ -46,6 +43,10 @@
       getImageUrl(image){
         return getServerUrl("image/"+image);
       }
+    },
+    mounted() {
+      //实例化
+      this.scroll=new Bscroll(this.$refs.wrapper);
     }
   }
 </script>
