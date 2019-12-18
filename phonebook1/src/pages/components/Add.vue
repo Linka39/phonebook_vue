@@ -8,8 +8,8 @@
           <img :src="getImageUrl(phoneBooks.image)" alt="">
         </div>
         <div class="action">
-          <button>修改头像</button>
-          <input type="file" >
+          <button @click="imageClick">修改头像</button>
+          <input type="file" name="file" accept="image/png,image/gif,image/jpeg,image/jpg" ref="file" @change="upload">
         </div>
       </div>
 
@@ -49,7 +49,8 @@
 </template>
 
 <script>
-    import {getServerUrl} from "../../config/sys";
+    import axios from 'axios'
+    import {getServerUrl} from "../../config/sys"
 
     export default {
         name: "Add",
@@ -61,6 +62,37 @@
         methods:{
           getImageUrl(image){
             return getServerUrl('image/'+image);
+          },
+          imageClick(){
+            //关联操作标签对象,触发点击事件
+            this.$refs.file.click();
+          },
+          upload(e){
+            //event.target表示直接接受事件的dom对象,此为获取多选文件的第一个
+            let file =  e.target.files[0];
+            //定义form数据
+            let param=new FormData();
+            //添加数据传输给后台  （名字，数据）
+            param.append('file',file,file.name);
+            /*param.append('test','liuly');
+            console.log(param);
+            console.log(param.get('test'));*/
+
+            let token = window.localStorage.getItem("token");
+            // axios.defaults.headers.common['token']=token;
+            let url=getServerUrl("uploadImage");
+            // multipart/form-data：指定传输数据为二进制数据，例如图片、mp3、文件
+            let config={
+              header:{"Content-Type":'multipart/form-data','token':token}
+            }
+            axios.post(url,param,config)
+              .then(res=>{
+                if(res.data.code==0){
+                  this.phoneBooks.image= res.data.data.title;
+                }
+              }).catch(error=>{
+              this.errorInfo=error;
+            })
           }
         }
     }
