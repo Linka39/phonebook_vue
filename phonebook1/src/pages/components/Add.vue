@@ -5,7 +5,7 @@
       </div>
       <div class="image">
         <div class="info">
-          <img :src="getImageUrl(phoneBooks.image)" alt="">
+          <img :src="getImageUrl(phoneBooks.image)" alt="头像" @click="showGalleryClick">
         </div>
         <div class="action">
           <button @click="imageClick">修改头像</button>
@@ -45,19 +45,29 @@
           <a href="">保存</a>
         </div>
       </div>
+
+      <gallery v-show="showGallery"
+               :galleryImag="galleryImag"
+                @hideGlleryClick="hideGlleryClick"></gallery>
     </div>
 </template>
 
 <script>
     import axios from 'axios'
     import {getServerUrl} from "../../config/sys"
+    import Gallery from '@/pages/common/Gallery'
 
-    export default {
+    export default{
         name: "Add",
         data(){
           return{
-            phoneBooks:{image:'010.png'}
+            phoneBooks:{image:'010.png'},
+            showGallery:false,
+            galleryImag:''
           }
+        },
+        components:{
+            Gallery
         },
         methods:{
           getImageUrl(image){
@@ -66,6 +76,13 @@
           imageClick(){
             //关联操作标签对象,触发点击事件
             this.$refs.file.click();
+          },
+          showGalleryClick(){
+            this.galleryImag=this.getImageUrl(this.phoneBooks.image);
+            this.showGallery=true
+          },
+          hideGlleryClick(){
+            this.showGallery=false
           },
           upload(e){
             //event.target表示直接接受事件的dom对象,此为获取多选文件的第一个
