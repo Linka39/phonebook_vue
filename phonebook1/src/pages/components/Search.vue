@@ -92,7 +92,7 @@
     z-index: 2
     overflow: hidden;
     position: absolute;
-    top: 1.74rem;
+    top: 1.55rem;
     left: 0;
     right: 0;
     bottom: 0;

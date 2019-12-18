@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     通讯录
-    <div class="iconfont add-icon">&#xe6db;</div>
+    <router-link tag="div" to="/add" class="iconfont add-icon">&#xe6db;</router-link>
   </div>
 </template>
 
@@ -17,7 +17,7 @@
     position: relative;
     overflow: hidden;
     background: $bgColor;
-    font-size: .48rem;
+    font-size: .4rem;
     font-weight: 400;
     text-align: center;
     height: .86rem;
@@ -26,5 +26,5 @@
       position fixed
       top 0rem
       right .45rem
-      font-size .5rem
+      font-size .42rem
 </style>
