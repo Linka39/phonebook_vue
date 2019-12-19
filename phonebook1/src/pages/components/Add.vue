@@ -56,6 +56,7 @@
     import axios from 'axios'
     import {getServerUrl} from "../../config/sys"
     import Gallery from '@/pages/common/Gallery'
+    import Pubsub from 'pubsub-js'
 
     export default{
         name: "Add",
@@ -97,7 +98,7 @@
               return;
             }
             if(!(/^1[3456789]\d{9}$/.test(this.phoneBook.phoneNumber))){
-              alert("手机号码有误，请重填")
+              alert("手机号码有误，请重填");
               return;
             }
             /*if(this.phoneBook.teleNumber!=null && this.phoneBook.teleNumber.trim()!='' && !/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(this.phoneBook.teleNumber)){
@@ -116,6 +117,8 @@
               .then(res=>{
                 if(res.data.code==0){
                   alert("添加成功");
+                  //用Pubsub进行方法回调，后面为回调函数的参数
+                  Pubsub.publish('refreshPhoneBook','');
                   this.$router.replace('/phoneBook');
                 }else{
                   alert(res.data.msg)

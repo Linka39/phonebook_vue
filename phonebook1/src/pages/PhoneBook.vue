@@ -19,6 +19,7 @@
   import PhoneBookSearch from "./components/Search"
   import PhoneBookList from "./components/List"
   import PhoneBookAlphabet from  "./components/Alphabet"
+  import PubSub from 'pubsub-js'
 
     export default {
       name: "PhoneBook",
@@ -67,6 +68,11 @@
       mounted() {
         setInterval(this.refreshToken,1000*60*10);//10分钟刷新一次
         this.getPhoneBooks(); //加载所有电话簿信息
+
+        PubSub.subscribe('refreshPhoneBook',(msg,data)=>{
+          console.log('收到消息 refreshPhoneBook');
+          this.getPhoneBooks();
+        })
       }
     }
 </script>
