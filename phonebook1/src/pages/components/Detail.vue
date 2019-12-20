@@ -42,7 +42,7 @@
 
     <div class="action">
       <div class="item border-bottom">
-        <a @click="addInfo">保存</a>
+        <a @click="updateInfo">保存修改</a>
       </div>
     </div>
 
@@ -85,7 +85,7 @@
       hideGlleryClick(){
         this.showGallery=false
       },
-      addInfo(){
+      updateInfo(){
         let url=getServerUrl('phoneBook/save');
         let token=window.localStorage.getItem('token')
         axios.defaults.headers.common['token'] = token;
@@ -106,7 +106,8 @@
           return false;
         }*/
         axios.post(url,
-          {"name":this.phoneBook.name,
+          {"id":this.phoneBook.id,
+            "name":this.phoneBook.name,
             "phoneNumber":this.phoneBook.phoneNumber,
             "teleNumber":this.phoneBook.teleNumber,
             "workAddress":this.phoneBook.workAddress,
@@ -116,7 +117,7 @@
             "image":this.phoneBook.image})
           .then(res=>{
             if(res.data.code==0){
-              alert("添加成功");
+              alert("修改成功");
               //用Pubsub进行方法回调，后面为回调函数的参数
               Pubsub.publish('refreshPhoneBook','');
               this.$router.replace('/phoneBook');
