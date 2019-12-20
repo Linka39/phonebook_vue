@@ -7,13 +7,16 @@
            :key="key"
             :ref="key">
         <div class="title">{{key}}</div>
-        <div class="item"
+        <!--动态取值需要在:to内加上"``"-->
+        <router-link class="item"
+                     tag="div"
+                     :to="`/detail/${innerItem.id}`"
              v-for="innerItem of item"
              :key="innerItem.id">
           <!--属性前加上冒号才能动态计算-->
           <img :src="getImageUrl(innerItem.image)" alt="image" >
           <div class="content border-bottom">{{innerItem.name}}</div>
-        </div>
+        </router-link>
       </div>
     </div>
     <div class="phoneBook">
@@ -48,8 +51,8 @@
       }
     },
     mounted() {
-      //实例化
-      this.scroll=new Bscroll(this.$refs.wrapper);
+      //实例化,设置可以点击
+      this.scroll=new Bscroll(this.$refs.wrapper,{click:true});
     },
     watch:{
       letter(){
