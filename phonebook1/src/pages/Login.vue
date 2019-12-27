@@ -14,7 +14,10 @@
         <p class="errorInfo">{{errorInfo}}</p>
       </form>
       <p class="copyright">
-        Copyright © 2012-2019 <a href="https://i-tiny-leo.github.io/" target="_blank"> &nbsp;&nbsp;I-tiny-leo</a></p>
+        Copyright © 2018-2019 <a href="https://i-tiny-leo.github.io/" target="_blank"> &nbsp;&nbsp;I-tiny-leo</a></p>
+      <p class="game">
+        <a @click="toGame" href="javascript:">&nbsp;<img src="../assets/img/game.png" height="30"/></a>
+      </p>
     </div>
 </template>
 
@@ -51,10 +54,15 @@
                   console.log(res.data.token);
                   window.localStorage.setItem("token",res.data.token);
                   this.$router.replace('/phoneBook');
+                }else{
+                  this.errorInfo=res.data.msg;
                 }
               }).catch(error=>{
                 this.errorInfo=error;
             })
+          },
+          toGame(){
+            this.$router.push('/myGame');
           }
         }
     }
@@ -104,6 +112,10 @@
   .copyright
     position: absolute;
     padding-top: 0;
-    padding-left: 1.7rem;
+    padding-left: 1.4rem;
     font-size: .3rem;
+  .game
+    position: relative
+    top -0.15rem
+    left 0.3rem
 </style>
