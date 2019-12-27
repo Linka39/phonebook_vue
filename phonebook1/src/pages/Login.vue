@@ -18,6 +18,9 @@
       <p class="game">
         <a @click="toGame" href="javascript:">&nbsp;<img src="../assets/img/game.png" height="30"/></a>
       </p>
+      <p class="game2">
+        <a  href="/tankGame">&nbsp;<img src="../assets/img/game3.png" height="30"/></a>
+      </p>
     </div>
 </template>
 
@@ -112,10 +115,17 @@
   .copyright
     position: absolute;
     padding-top: 0;
-    padding-left: 1.4rem;
+    padding-left: 1.3rem;
     font-size: .3rem;
   .game
     position: relative
+    display inline-block
+    width: 6rem
     top -0.15rem
     left 0.3rem
+  .game2
+    position: relative
+    display inline-block
+    width: 1rem
+    top -0.15rem
 </style>
