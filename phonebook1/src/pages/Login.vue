@@ -27,6 +27,8 @@
 <script>
   import axios from 'axios'
   import {getServerUrl} from "../config/sys";
+  import { mapActions, mapGetters } from "vuex";
+
 
   export default {
         name: "Login",
@@ -38,6 +40,7 @@
           }
         },
         methods:{
+          ...mapActions(['modifyUserData']), // 相当于this.$store.dispatch('modifyName'),提交这个方法
           submit(){
             let url= getServerUrl("login");
             if(this.userName.trim()==''){
@@ -54,6 +57,9 @@
               .then(res=>{
                 /*console.log(res);*/
                 if(res.data.code==0){
+                  this.modifyUserData({
+
+                  })
                   console.log(res.data.token);
                   window.localStorage.setItem("token",res.data.token);
                   this.$router.replace('/phoneBook');
