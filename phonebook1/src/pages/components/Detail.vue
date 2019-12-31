@@ -1,14 +1,14 @@
 <template>
   <div class="detail">
-    <div class="header">
-      <router-link tag="div" to="/phoneBook" class="iconfont back-icon">&#xe606;</router-link>
+    <div class="header" :style="{'background-color':mainTag?'#ff8dac':'#d3d3d3'}">
+      <router-link tag="div" to="/phoneBook"  class="iconfont back-icon">&#xe606;</router-link>
     </div>
     <div class="image">
       <div class="info">
         <img :src="getImageUrl(phoneBook.image)" alt="头像" @click="showGalleryClick">
       </div>
       <div class="action">
-        <button @click="imageClick">修改头像</button>
+        <button :style="{'background-color':mainColor}" @click="imageClick">修改头像</button>
         <input type="file" name="file" accept="image/png,image/gif,image/jpeg,image/jpg" ref="file" @change="upload">
       </div>
     </div>
@@ -42,9 +42,9 @@
 
     <div class="action">
       <div class="item border-bottom">
-        <a @click="updateInfo">保存修改</a>
+        <a @click="updateInfo" :style="{'color':mainColor}">保存修改</a>
       </div>
-      <div class="item border-bottom">
+      <div class="item border-bottom" v-if="!mainTag">
         <a @click="deleteInfo">删除</a>
       </div>
     </div>
@@ -67,11 +67,18 @@
       return{
         phoneBook:{image:'010.png'},
         showGallery:false,
+        mainTag:false,
+        mainColor:'#4caf50',
         galleryImag:''
       }
     },
     components:{
       Gallery
+    },
+    computed:{
+      sortArray(){
+        return this.$store.state.sortArray;
+      }
     },
     methods:{
       getImageUrl(image){
@@ -176,6 +183,18 @@
           this.errorInfo=error;
         })
       },
+      initData() {
+        let id = this.$route.params.id;
+        let A1 = this.sortArray;
+        for(let i =0;i<A1.length;++i){
+          if(A1[i] == id){
+            this.mainTag = true;
+          }
+        }
+        if(this.mainTag){
+          this.mainColor='#ff8dac'
+        }
+      },
       getInfo(){
         let url=getServerUrl('phoneBook/findById');
         let token=window.localStorage.getItem('token');
@@ -194,6 +213,7 @@
     },
     mounted() {
       console.log(this.$route);
+      this.initData();
       this.getInfo();
     }
   }
@@ -216,7 +236,6 @@
       text-align: left;
       padding-left: .2rem;
       padding-top: .1rem;
-      background-color: #d3d3d3;
       width: 100%;
       z-index: 3;
       opacity: .8;
@@ -242,11 +261,10 @@
         padding-top: 1.55rem
         text-align: left
         button
-          background-color: #4caf50
           border: none
-          color: #fff
           padding: .15rem
           text-align: center
+          color: #fff
           text-decoration: none
           display: inline-block
           font-size: 16px

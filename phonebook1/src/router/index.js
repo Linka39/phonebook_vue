@@ -14,6 +14,10 @@ export default new Router({
       name: 'Login',
       component: resolve => require(['@/pages/Login'],resolve)
     },{
+      path: '/LoginE',
+      name: 'LoginE',
+      component: resolve => require(['@/pages/LoginE'],resolve)
+    },{
       path: '/phoneBook',
       name: 'PhoneBook',
       meta:{

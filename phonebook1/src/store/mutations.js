@@ -8,3 +8,6 @@ export const userData = (state,userInfo) => {
 export const updateColor = (state,color) => {
   state.color = color
 }
+export const updatesortArray = (state,sortArray) => {
+  state.sortArray = sortArray
+}

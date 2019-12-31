@@ -1,5 +1,13 @@
 <template>
     <div>
+      <div class="type">
+        <label @click="active()" :class="[activetype ? 'active' : 'noactive']"
+        >中文</label
+        ><span class="noactive">|</span>
+        <label @click="active()" :class="[!activetype ? 'active' : 'noactive']"
+        >English</label
+        >
+      </div>
       <div class="login-logo">通讯录</div>
       <form action="" class="login-cont">
         <ul>
@@ -34,13 +42,17 @@
         name: "Login",
         data(){
           return{
+            activetype:true,
             userName:'',
             password:'',
             errorInfo:''
           }
         },
         methods:{
-          ...mapActions(['modifyUserData']), // 相当于this.$store.dispatch('modifyName'),提交这个方法
+          ...mapActions(['modifyUserData','modifyColor']), // 相当于this.$store.dispatch('modifyName'),提交这个方法
+          active() {
+            this.activetype = !this.activetype;
+          },
           submit(){
             let url= getServerUrl("login");
             if(this.userName.trim()==''){
@@ -58,8 +70,10 @@
                 /*console.log(res);*/
                 if(res.data.code==0){
                   this.modifyUserData({
-
-                  })
+                    userName:res.data.userData.userName,
+                    userColor:res.data.userData['color'],
+                  });
+                  this.modifyColor({});
                   console.log(res.data.token);
                   window.localStorage.setItem("token",res.data.token);
                   this.$router.replace('/phoneBook');
@@ -78,6 +92,21 @@
 </script>
 
 <style lang="stylus" scoped>
+  .type {
+    width: 100%;
+    position: absolute;
+    top: 0.12rem;
+    label {
+      margin: 0.1rem;
+    }
+  }
+  .active {
+    color: #465e8c;
+    font-weight: 700;
+  }
+  .noactive {
+    color: #626262;
+  }
   .login-logo
     width: 3rem
     height: 3rem

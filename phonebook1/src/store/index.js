@@ -12,7 +12,8 @@ Vue.use(Vuex)
 // 首先声明一个需要全局维护的状态 state
 const state = {
   userInfo: {}, // 用户信息
-  color:''
+  color:{},
+  sortArray:[129,130,131,132,133,134,135]
 }
 
 //引入模块,持久化存储数据

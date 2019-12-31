@@ -1,6 +1,7 @@
 <template>
     <div>
-      <phone-book-header></phone-book-header>
+      <phone-book-header
+        :phoneBooks="phoneBooks"></phone-book-header>
       <phone-book-search
         :phoneBooks="phoneBooks"></phone-book-search>
       <phone-book-list
@@ -9,6 +10,7 @@
       <phone-book-alphabet
         @change="handleLetterChange"
         :phoneBooks="phoneBooks"></phone-book-alphabet>
+
     </div>
 </template>
 
@@ -26,6 +28,8 @@
       data(){
         return{
           phoneBooks:{},
+          userName:'',
+          userColor:'',
           letter:''
         }
       },

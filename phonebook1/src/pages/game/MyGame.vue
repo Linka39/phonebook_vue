@@ -7,21 +7,47 @@
           <div class="back" @click="goback">Back</div>
         </div>
       </label>
+      <transition name="fade">
+        <div v-if="show">hello world</div>
+      </transition>
+
+      <button @click="handleClick">toggle</button>
     </div>
 </template>
 
 <script>
     export default {
       name: "mygame",
+      data(){
+        return{
+          show:true
+        }
+      },
       methods:{
-          goback(){
-            this.$router.back();
-          },
+        goback(){
+          this.$router.back();
+        },
+        handleClick: function(){
+          this.show = !this.show;
+        }
+
       }
     }
 </script>
 
 <style scoped>
+  .fade-enter{
+    opacity: 0;
+  }
+  .fade-enter-active{
+    transition: opacity 1s;
+  }
+  .fade-leave-to{
+    opacity: 0;
+  }
+  .fade-leave-active{
+    transition: opacity 1s;
+  }
   .mygame{
     height: 16.4rem;
     background: #ff7171;

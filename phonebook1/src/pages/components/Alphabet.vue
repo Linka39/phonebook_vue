@@ -70,7 +70,9 @@
         },
       //dom挂载完，并且数据传输过来
       updated() {
-        this.startY=this.$refs['A'][0].offsetTop;
+        if(this.$refs['A']){
+          this.startY=this.$refs['A'][0].offsetTop;
+        }
       }
     }
 </script>
