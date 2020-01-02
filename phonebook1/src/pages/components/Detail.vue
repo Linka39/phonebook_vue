@@ -118,47 +118,52 @@
         }
       },
       updateInfo(){
-        let url=getServerUrl('phoneBook/save');
-        let token=window.localStorage.getItem('token')
-        axios.defaults.headers.common['token'] = token;
-        if(this.phoneBook.name==null || this.phoneBook.name.trim()==''){
-          alert("姓名不能为空！");
+        if(this.mainTag){
+          alert("此用户信息不允许修改！")
           return;
+        }else{
+          let url=getServerUrl('phoneBook/save');
+          let token=window.localStorage.getItem('token')
+          axios.defaults.headers.common['token'] = token;
+          if(this.phoneBook.name==null || this.phoneBook.name.trim()==''){
+            alert("姓名不能为空！");
+            return;
+          }
+          if(this.phoneBook.phoneNumber==null || this.phoneBook.phoneNumber.trim()==''){
+            alert("手机号码不为空！")
+            return;
+          }
+          if(!(/^1[3456789]\d{9}$/.test(this.phoneBook.phoneNumber))){
+            alert("手机号码有误，请重填");
+            return;
+          }
+          /*if(this.phoneBook.teleNumber!=null && this.phoneBook.teleNumber.trim()!='' && !/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(this.phoneBook.teleNumber)){
+            alert('固定电话有误，请重填');
+            return false;
+          }*/
+          axios.post(url,
+            {"id":this.phoneBook.id,
+              "name":this.phoneBook.name,
+              "phoneNumber":this.phoneBook.phoneNumber,
+              "teleNumber":this.phoneBook.teleNumber,
+              "workAddress":this.phoneBook.workAddress,
+              "homeAddress":this.phoneBook.homeAddress,
+              "image":this.phoneBook.image,
+              "remark":this.phoneBook.remark,
+              "image":this.phoneBook.image})
+            .then(res=>{
+              if(res.data.code==0){
+                alert("修改成功");
+                //用Pubsub进行方法回调，后面为回调函数的参数
+                Pubsub.publish('refreshPhoneBook','');
+                this.$router.replace('/phoneBook');
+              }else{
+                alert(res.data.msg);
+              }
+            }).catch(error=>{
+            alert(error)
+          })
         }
-        if(this.phoneBook.phoneNumber==null || this.phoneBook.phoneNumber.trim()==''){
-          alert("手机号码不为空！")
-          return;
-        }
-        if(!(/^1[3456789]\d{9}$/.test(this.phoneBook.phoneNumber))){
-          alert("手机号码有误，请重填");
-          return;
-        }
-        /*if(this.phoneBook.teleNumber!=null && this.phoneBook.teleNumber.trim()!='' && !/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(this.phoneBook.teleNumber)){
-          alert('固定电话有误，请重填');
-          return false;
-        }*/
-        axios.post(url,
-          {"id":this.phoneBook.id,
-            "name":this.phoneBook.name,
-            "phoneNumber":this.phoneBook.phoneNumber,
-            "teleNumber":this.phoneBook.teleNumber,
-            "workAddress":this.phoneBook.workAddress,
-            "homeAddress":this.phoneBook.homeAddress,
-            "image":this.phoneBook.image,
-            "remark":this.phoneBook.remark,
-            "image":this.phoneBook.image})
-          .then(res=>{
-            if(res.data.code==0){
-              alert("修改成功");
-              //用Pubsub进行方法回调，后面为回调函数的参数
-              Pubsub.publish('refreshPhoneBook','');
-              this.$router.replace('/phoneBook');
-            }else{
-              alert(res.data.msg);
-            }
-          }).catch(error=>{
-          alert(error)
-        })
       },
       upload(e){
         let file =  e.target.files[0];

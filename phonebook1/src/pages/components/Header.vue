@@ -3,7 +3,7 @@
     <div class="header" :style="{'background':bgColor}">
       通讯录
       <div class="btn2" v-if="userColor=='liuly'">
-        <label>
+        <label id="showBtn" style="visibility: hidden">
           <input type="checkbox"  />
           <div @click="handleClick" class="card">
             <div class="front">Check</div>
@@ -37,6 +37,9 @@
         name: "Head",
       mounted(){
         this.initData();
+        setTimeout(function () {
+          document.getElementById("showBtn").style.visibility="visible";
+        },3000);
       },
       data(){
           return{
@@ -86,7 +89,7 @@
             }
             this.list=result;
             console.log(this.list);
-          },600)
+          },600);
         },
       }
     }
